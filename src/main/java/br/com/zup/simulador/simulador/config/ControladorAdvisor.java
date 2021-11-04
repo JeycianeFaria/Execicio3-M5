@@ -1,6 +1,7 @@
 package br.com.zup.simulador.simulador.config;
 
-import br.com.zup.simulador.simulador.exeptions.RiscoInvalido;
+import br.com.zup.simulador.simulador.exeptions.InvestimentoInvalido;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,9 +28,15 @@ public class ControladorAdvisor {
     }
 
 
-    @ExceptionHandler(RiscoInvalido.class)
+    @ExceptionHandler(InvalidFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public MensagemError riscoInvalido(RiscoInvalido exeption) {
+    public MensagemError riscoInvalido(InvalidFormatException exeption) {
+        return new MensagemError("Risco não reconhecido");
+    }
+
+    @ExceptionHandler(InvestimentoInvalido.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public MensagemError investimentoInvalido(InvestimentoInvalido exeption) {
         return new MensagemError(exeption.getMessage());
     }
 

@@ -3,7 +3,7 @@ package br.com.zup.simulador.simulador;
 import br.com.zup.simulador.simulador.dtos.RetornoDTO;
 import br.com.zup.simulador.simulador.dtos.RiscoDTO;
 import br.com.zup.simulador.simulador.dtos.SimuladorDTO;
-import br.com.zup.simulador.simulador.exeptions.RiscoInvalido;
+import br.com.zup.simulador.simulador.exeptions.InvestimentoInvalido;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,15 +15,10 @@ public class SimuladorService {
     private List<SimuladorDTO> simulacoes = new ArrayList<>();
 
 
-    public RiscoDTO validarRisco(RiscoDTO risco) {
-
-        for (RiscoDTO referencia : RiscoDTO.values()) {
-            if (risco.equals(referencia)) {
-                return referencia;
-            }
+    public void validarInvestimento(SimuladorDTO dadosSimulador){
+        if (dadosSimulador.getValorInvestido() < 5000 && dadosSimulador.getRisco().equals(RiscoDTO.ALTO)){
+            throw new InvestimentoInvalido("Investimento de alto risco deve ser acima de R$ 5000");
         }
-
-        throw new RiscoInvalido("Risco não reconhecido");
     }
 
     public void salvarSimulacoes(SimuladorDTO simulacao) {
@@ -50,7 +45,7 @@ public class SimuladorService {
     public RetornoDTO retornoDTO(SimuladorDTO simulacao) {
         RetornoDTO retornoSimulacao = new RetornoDTO();
 
-        validarRisco(simulacao.getRisco());
+        validarInvestimento(simulacao);
         salvarSimulacoes(simulacao);
         retornoSimulacao.setValorInicial(simulacao.getValorInvestido());
         retornoSimulacao.setValorTotal(calcularInvestimento(simulacao));
