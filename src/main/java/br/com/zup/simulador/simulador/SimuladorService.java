@@ -3,6 +3,7 @@ package br.com.zup.simulador.simulador;
 import br.com.zup.simulador.simulador.dtos.RetornoDTO;
 import br.com.zup.simulador.simulador.dtos.RiscoDTO;
 import br.com.zup.simulador.simulador.dtos.SimuladorDTO;
+import br.com.zup.simulador.simulador.exeptions.RiscoInvalido;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,31 +13,35 @@ import java.util.List;
 public class SimuladorService {
 
     private List<SimuladorDTO> simulacoes = new ArrayList<>();
-    private RetornoDTO retornoSimulacao = new RetornoDTO();
 
 
-    public void salvarSimulacoes(SimuladorDTO simulacao){
+    public  RiscoDTO validarRisco(String tipoSelecionado) {
+
+          for (RiscoDTO referencia : RiscoDTO.values()) {
+              if (tipoSelecionado.equalsIgnoreCase(String.valueOf(referencia))) {
+                  return referencia;
+              }
+          }
+
+          throw new RiscoInvalido("Risco não reconhecido");
+      }
+
+
+    public void salvarSimulacoes(SimuladorDTO simulacao) {
         simulacoes.add(simulacao);
     }
 
-    public double calcularInvestimento(SimuladorDTO dadosSimulador){
+    public double calcularInvestimento(SimuladorDTO dadosSimulador) {
         double valorTotalLucro = dadosSimulador.getValorInvestido();
 
-        for (int contador = 0; contador < dadosSimulador.getMesesDeAplicacao(); contador ++ ){
-            if (dadosSimulador.getRisco() == RiscoDTO.ALTO){
-                valorTotalLucro = valorTotalLucro + (valorTotalLucro * 0.025);
-
-            }else if (dadosSimulador.getRisco() == RiscoDTO.MEDIO){
-                valorTotalLucro = valorTotalLucro + (valorTotalLucro * 0.015);
-            }else if (dadosSimulador.getRisco() == RiscoDTO.BAIXO){
-                valorTotalLucro = valorTotalLucro + (valorTotalLucro * 0.005);
-            }
+        for (int contador = 0; contador < dadosSimulador.getMesesDeAplicacao(); contador++) {
+            valorTotalLucro = valorTotalLucro + (valorTotalLucro * dadosSimulador.getRisco().getTaxa());
         }
 
         return valorTotalLucro;
     }
 
-    public  double calcularLucro(SimuladorDTO dadosSimulador){
+    public double calcularLucro(SimuladorDTO dadosSimulador) {
         double valorInicial = dadosSimulador.getValorInvestido();
         double valorTotal = calcularInvestimento(dadosSimulador);
         double valorLucro = valorTotal - valorInicial;
@@ -44,8 +49,10 @@ public class SimuladorService {
         return valorLucro;
     }
 
+    public RetornoDTO retornoDTO(SimuladorDTO simulacao) {
+        RetornoDTO retornoSimulacao = new RetornoDTO();
 
-    public RetornoDTO retornoDTO (SimuladorDTO simulacao){
+        validarRisco(simulacao.getRisco().toString());
         salvarSimulacoes(simulacao);
         retornoSimulacao.setValorInicial(simulacao.getValorInvestido());
         retornoSimulacao.setValorTotal(calcularInvestimento(simulacao));

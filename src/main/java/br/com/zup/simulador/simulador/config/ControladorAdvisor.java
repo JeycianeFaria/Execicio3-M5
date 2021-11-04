@@ -1,5 +1,6 @@
 package br.com.zup.simulador.simulador.config;
 
+import br.com.zup.simulador.simulador.exeptions.RiscoInvalido;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,10 +21,16 @@ public class ControladorAdvisor {
         List<MensagemError> mensagens = new ArrayList<>();
 
         for (FieldError fieldError: exception.getFieldErrors()) {
-            mensagens.add(new MensagemError(fieldError.getDefaultMessage(), fieldError.getField()));
+            mensagens.add(new MensagemError(fieldError.getDefaultMessage()));
         }
 
         return mensagens;
+    }
+
+    @ExceptionHandler(RiscoInvalido.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public MensagemError riscoInvalido(RiscoInvalido exeption){
+        return new MensagemError(exeption.getMessage());
     }
 
 }
