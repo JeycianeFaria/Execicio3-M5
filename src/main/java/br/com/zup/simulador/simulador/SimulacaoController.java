@@ -1,5 +1,6 @@
 package br.com.zup.simulador.simulador;
 
+import br.com.zup.simulador.simulador.dtos.RetornoDTO;
 import br.com.zup.simulador.simulador.dtos.SimuladorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,8 @@ public class SimulacaoController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void simularInvestimento(@RequestBody SimuladorDTO simuladorDTO){
-
+    public RetornoDTO simularInvestimento(@RequestBody SimuladorDTO simuladorDTO){
+        return simulacao.retornoDTO(simuladorDTO);
     }
 
 }

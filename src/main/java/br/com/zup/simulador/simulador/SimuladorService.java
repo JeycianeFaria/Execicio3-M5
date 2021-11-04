@@ -3,7 +3,12 @@ package br.com.zup.simulador.simulador;
 import br.com.zup.simulador.simulador.dtos.RetornoDTO;
 import br.com.zup.simulador.simulador.dtos.RiscoDTO;
 import br.com.zup.simulador.simulador.dtos.SimuladorDTO;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
 public class SimuladorService {
 
     private RetornoDTO retornoSimulacao = new RetornoDTO();
@@ -31,6 +36,15 @@ public class SimuladorService {
         double valorLucro = valorTotal - valorInicial;
 
         return valorLucro;
+    }
+
+
+    public RetornoDTO retornoDTO (SimuladorDTO simulacao){
+        retornoSimulacao.setValorInicial(simulacao.getValorInvestido());
+        retornoSimulacao.setValorTotal(calcularInvestimento(simulacao));
+        retornoSimulacao.setValorLucro(calcularLucro(simulacao));
+
+        return retornoSimulacao;
     }
 
 }
