@@ -7,18 +7,19 @@ public class SimuladorDTO {
     private String cpf;
     private double valorInvestido;
     private int mesesDeAplicacao;
-    //riscoDTO
+    private RiscoDTO risco;
 
 
     public SimuladorDTO() {
     }
 
-    public SimuladorDTO(String email, String nome, String cpf, double valorInvestido, int mesesDeAplicacao) {
+    public SimuladorDTO(String email, String nome, String cpf, double valorInvestido, int mesesDeAplicacao, RiscoDTO risco) {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
         this.valorInvestido = valorInvestido;
         this.mesesDeAplicacao = mesesDeAplicacao;
+        this.risco = risco;
     }
 
 
@@ -60,6 +61,14 @@ public class SimuladorDTO {
 
     public void setMesesDeAplicacao(int mesesDeAplicacao) {
         this.mesesDeAplicacao = mesesDeAplicacao;
+    }
+
+    public RiscoDTO getRisco() {
+        return risco;
+    }
+
+    public void setRisco(RiscoDTO risco) {
+        this.risco = risco;
     }
 
 }
