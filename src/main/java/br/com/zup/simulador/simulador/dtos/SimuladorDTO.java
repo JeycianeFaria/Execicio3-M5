@@ -1,6 +1,7 @@
 package br.com.zup.simulador.simulador.dtos;
 
 import org.hibernate.validator.constraints.br.CPF;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 

@@ -15,17 +15,16 @@ public class SimuladorService {
     private List<SimuladorDTO> simulacoes = new ArrayList<>();
 
 
-    public  RiscoDTO validarRisco(String tipoSelecionado) {
+    public RiscoDTO validarRisco(RiscoDTO risco) {
 
-          for (RiscoDTO referencia : RiscoDTO.values()) {
-              if (tipoSelecionado.equalsIgnoreCase(String.valueOf(referencia))) {
-                  return referencia;
-              }
-          }
+        for (RiscoDTO referencia : RiscoDTO.values()) {
+            if (risco.equals(referencia)) {
+                return referencia;
+            }
+        }
 
-          throw new RiscoInvalido("Risco não reconhecido");
-      }
-
+        throw new RiscoInvalido("Risco não reconhecido");
+    }
 
     public void salvarSimulacoes(SimuladorDTO simulacao) {
         simulacoes.add(simulacao);
@@ -44,15 +43,14 @@ public class SimuladorService {
     public double calcularLucro(SimuladorDTO dadosSimulador) {
         double valorInicial = dadosSimulador.getValorInvestido();
         double valorTotal = calcularInvestimento(dadosSimulador);
-        double valorLucro = valorTotal - valorInicial;
 
-        return valorLucro;
+        return valorTotal - valorInicial;
     }
 
     public RetornoDTO retornoDTO(SimuladorDTO simulacao) {
         RetornoDTO retornoSimulacao = new RetornoDTO();
 
-        validarRisco(simulacao.getRisco().toString());
+        validarRisco(simulacao.getRisco());
         salvarSimulacoes(simulacao);
         retornoSimulacao.setValorInicial(simulacao.getValorInvestido());
         retornoSimulacao.setValorTotal(calcularInvestimento(simulacao));
