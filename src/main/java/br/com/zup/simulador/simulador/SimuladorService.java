@@ -25,4 +25,12 @@ public class SimuladorService {
         return valorTotalLucro;
     }
 
+    public  double calcularLucro(SimuladorDTO dadosSimulador){
+        double valorInicial = dadosSimulador.getValorInvestido();
+        double valorTotal = calcularInvestimento(dadosSimulador);
+        double valorLucro = valorTotal - valorInicial;
+
+        return valorLucro;
+    }
+
 }
