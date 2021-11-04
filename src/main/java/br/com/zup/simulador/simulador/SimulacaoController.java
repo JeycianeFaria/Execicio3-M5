@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/simulacao")
 public class SimulacaoController {
@@ -16,7 +18,7 @@ public class SimulacaoController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public RetornoDTO simularInvestimento(@RequestBody SimuladorDTO simuladorDTO){
+    public RetornoDTO simularInvestimento(@RequestBody @Valid SimuladorDTO simuladorDTO){
         return simulacao.retornoDTO(simuladorDTO);
     }
 

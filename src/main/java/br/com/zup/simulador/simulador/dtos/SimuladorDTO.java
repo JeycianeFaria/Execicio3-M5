@@ -1,9 +1,14 @@
 package br.com.zup.simulador.simulador.dtos;
 
+import org.hibernate.validator.constraints.br.CPF;
+import javax.validation.constraints.Email;
+
 public class SimuladorDTO {
 
+    @Email(message = "Email inválido")
     private String email;
     private String nome;
+    @CPF(message = "CPF inválido")
     private String cpf;
     private double valorInvestido;
     private int mesesDeAplicacao;
