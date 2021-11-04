@@ -11,7 +11,13 @@ import java.util.List;
 @Service
 public class SimuladorService {
 
+    private List<SimuladorDTO> simulacoes = new ArrayList<>();
     private RetornoDTO retornoSimulacao = new RetornoDTO();
+
+
+    public void salvarSimulacoes(SimuladorDTO simulacao){
+        simulacoes.add(simulacao);
+    }
 
     public double calcularInvestimento(SimuladorDTO dadosSimulador){
         double valorTotalLucro = dadosSimulador.getValorInvestido();
@@ -40,6 +46,7 @@ public class SimuladorService {
 
 
     public RetornoDTO retornoDTO (SimuladorDTO simulacao){
+        salvarSimulacoes(simulacao);
         retornoSimulacao.setValorInicial(simulacao.getValorInvestido());
         retornoSimulacao.setValorTotal(calcularInvestimento(simulacao));
         retornoSimulacao.setValorLucro(calcularLucro(simulacao));
