@@ -18,7 +18,7 @@ public class SimulacaoController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public RetornoDTO simularInvestimento(@RequestBody @Valid SimuladorDTO simuladorDTO){
+    public RetornoDTO simularInvestimento(@RequestBody @Valid SimuladorDTO simuladorDTO) {
         return simulacao.retornoDTO(simuladorDTO);
     }
 
