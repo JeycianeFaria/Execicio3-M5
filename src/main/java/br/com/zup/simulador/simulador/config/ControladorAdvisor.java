@@ -1,6 +1,7 @@
 package br.com.zup.simulador.simulador.config;
 
 import br.com.zup.simulador.simulador.exeptions.InvestimentoInvalido;
+import br.com.zup.simulador.simulador.exeptions.RiscoInvalido;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -31,10 +32,16 @@ public class ControladorAdvisor {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public MensagemError riscoInvalido(HttpMessageNotReadableException exeption) {
-        if (exeption.getLocalizedMessage().contains("br.com.zup.simulador.simulador.dtos.RiscoDTO")){
+        if (exeption.getLocalizedMessage().contains("br.com.zup.simulador.simulador.dtos.RiscoDTO")) {
             return new MensagemError("Risco não reconhecido");
         }
-            return new MensagemError(exeption.getLocalizedMessage());
+        return new MensagemError(exeption.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(RiscoInvalido.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public MensagemError riscoInvalido(RiscoInvalido exeption) {
+        return new MensagemError(exeption.getMessage());
     }
 
     @ExceptionHandler(InvestimentoInvalido.class)
