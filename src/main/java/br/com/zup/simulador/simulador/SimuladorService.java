@@ -43,15 +43,11 @@ public class SimuladorService {
     }
 
     public RetornoDTO retornoDTO(SimuladorDTO simulacao) {
-        RetornoDTO retornoSimulacao = new RetornoDTO();
 
         validarInvestimento(simulacao);
         salvarSimulacoes(simulacao);
-        retornoSimulacao.setValorInicial(simulacao.getValorInvestido());
-        retornoSimulacao.setValorTotal(calcularInvestimento(simulacao));
-        retornoSimulacao.setValorLucro(calcularLucro(simulacao));
 
-        return retornoSimulacao;
+        return new RetornoDTO(simulacao.getValorInvestido(),calcularLucro(simulacao),calcularInvestimento(simulacao));
     }
 
 }
