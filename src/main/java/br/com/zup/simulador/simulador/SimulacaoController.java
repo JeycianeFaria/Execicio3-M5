@@ -1,6 +1,7 @@
 package br.com.zup.simulador.simulador;
 
 import br.com.zup.simulador.simulador.dtos.RetornoDTO;
+import br.com.zup.simulador.simulador.dtos.RiscoDTO;
 import br.com.zup.simulador.simulador.dtos.SimuladorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,11 @@ public class SimulacaoController {
     @ResponseStatus(HttpStatus.OK)
     public RetornoDTO simularInvestimento(@RequestBody @Valid SimuladorDTO simuladorDTO) {
         return simulacao.retornoDTO(simuladorDTO);
+    }
+
+    @GetMapping("/teste/{risco}")
+    public RiscoDTO teste(@PathVariable("risco") RiscoDTO riscoDTO){
+        return riscoDTO;
     }
 
 }
