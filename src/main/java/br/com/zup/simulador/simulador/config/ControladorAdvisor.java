@@ -1,6 +1,8 @@
 package br.com.zup.simulador.simulador.config;
 
 import br.com.zup.simulador.simulador.exeptions.InvestimentoInvalido;
+import br.com.zup.simulador.simulador.exeptions.RiscoInvalido;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -27,14 +29,26 @@ public class ControladorAdvisor {
         return mensagens;
     }
 
+//
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public MensagemError riscoInvalido(HttpMessageNotReadableException exeption) {
+////        if (exeption.getLocalizedMessage().contains("br.com.zup.simulador.simulador.dtos.RiscoDTO")) {
+////            return new MensagemError("Risco não reconhecido");
+////        }
+//        return new MensagemError(exeption.getLocalizedMessage());
+//    }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    @ExceptionHandler(JsonMappingException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public MensagemError riscoInvalido(JsonMappingException exeption) {
+//        return new MensagemError(exeption.getLocalizedMessage());
+//    }
+
+    @ExceptionHandler(RiscoInvalido.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public MensagemError riscoInvalido(HttpMessageNotReadableException exeption) {
-        if (exeption.getLocalizedMessage().contains("br.com.zup.simulador.simulador.dtos.RiscoDTO")){
-            return new MensagemError("Risco não reconhecido");
-        }
-            return new MensagemError(exeption.getLocalizedMessage());
+    public MensagemError riscoInvalido(RiscoInvalido exeption) {
+        return new MensagemError(exeption.getMessage());
     }
 
     @ExceptionHandler(InvestimentoInvalido.class)
@@ -42,5 +56,11 @@ public class ControladorAdvisor {
     public MensagemError investimentoInvalido(InvestimentoInvalido exeption) {
         return new MensagemError(exeption.getMessage());
     }
+
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public MensagemError investimentoInvalido(Exception exeption) {
+//        return new MensagemError(exeption.getMessage());
+//    }
 
 }

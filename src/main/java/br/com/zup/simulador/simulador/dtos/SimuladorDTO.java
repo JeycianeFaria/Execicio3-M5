@@ -1,5 +1,8 @@
 package br.com.zup.simulador.simulador.dtos;
 
+import br.com.zup.simulador.simulador.conversor.ConversorRiscoDTO;
+import br.com.zup.simulador.simulador.conversor.RiscoDTOJsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
@@ -15,6 +18,7 @@ public class SimuladorDTO {
     private double valorInvestido;
     @Min(2)
     private int mesesDeAplicacao;
+    @JsonDeserialize(using = RiscoDTOJsonDeserializer.class)
     private RiscoDTO risco;
 
 
